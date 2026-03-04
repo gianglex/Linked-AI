@@ -4,75 +4,54 @@
 
 ---
 
-Kokeiltiin kahta eri buukkifirmaa.
+Juuri kävin ihan uskomattoman keskustelun tekoälystä terveydenhuollossa.
 
-Heittivät hanskat tiskiin.
+Ja tiedättekö mikä yllätti eniten?
 
-Kokeiltiin kolmatta. Nyt toimii.
+- Teknologia ei ole enää pullonkaula 🤯
+- Sääntelykehykset laahaa jälkijunassa kuin maanantaiaamun junaliikenne
+- Aikaiset käyttöönottajat näkee jo 3x tehokkuusparannuksia
 
-Jonka vuoksi etitään lisää designereita palveleen meidän asiakkaita.
+Se firma joka nappaa compliance-hommat haltuun ekana, vie koko potin.
 
-Meillä on tällä hetkellä auki yks Founding designer paikka, eli optio-ohjelmaa ja pääsee paitsi tekee asiakkaille hommia niin kehittään firmaa.
+Mutta hei, kertokaa te — onko teillä kokemuksia AI:n käytöstä terveyspuolella? Vai onko vielä "odotellaan ja katsotaan" -meiningillä?
 
-Sen lisäks ollaa palkkaamassa "ihan vaan töihin tänne"
+Kommentit auki. Tulta munille. 🔥
 
-Ja sitten tarvitaan myös yksinyrittäjiä ja freelancereita palveleen meidän asiakkaita tyyliin heti.
-
-Sinulta pitää löytyä vähintään kuusi vuotta kokemusta end-to-end SaaS-tuotteiden ja/tai digipalveluiden suunnittelusta.
-
-Tarvetta on tällä hetkellä generalisteille, jotka hanskaa koko tuotesuunnittelun putken discovery vaiheesta interaktiodatan keruuseen ja sen analysointiin.
-
-Mutta tarvitaan myös spesialisteja, esimerkiksi vaikka design systeemien rakentamiseen tai heavy duty UX research puoleen.
-
-Creative taustasta bonuspisteitä mut ei pakollinen.
-
-Pistä viestiä niin jutellaan.
+#Tekoäly #Terveydenhuolto #Innovaatio
 
 ---
 
-Suojele sun brändiä.
+Mulle esitetään jatkuvasti se ikuinen kysymys: "Mikä on se YKSI taito joka ratkaisee vuonna 2026?"
 
-Siinä se on yksinkertaisuudessaan. Asia, johon pitäisi suhtautua intohimolla, tarkoituksenomaisesti.
+Vastaus? Sopeutumiskyky.
 
-Brändi ei ole jokin päätös joskus joka pysyy samana vaikka siihen ei kiinnittäisi huomiota.
-Ei, brändi syntyy mielikuvista. Mielikuvien syntyminen vaatii kohtaamispisteitä, eli tunnettuutta.
+Ei koodaus. Ei prompt engineering. Ei edes johtajuus.
 
-Mutta kun olette päässeet siihen asti, että joku teidän jo tietää ja jotain teistä ajattelee. 
-Ja jos vielä niin hyvään pisteeseen, että teistä ajatellaan kuten haluisitte että teistä ajateltaisiin. Niin on syntynyt jotain mitä pitää suojella, varjella ja vahvistaa.
+Se kyky oppia, poisoppia ja uudelleenoppia nopeammin kuin maailma muuttuu ympärillä. Se on se oikea supervoimasi. 💪
 
-Miten se tehdään?
-Se vaatii ensin teidän ymmärrystä kuka me olemme ja mitä mielikuvaa me haluamme herättää. Mikä on tahtotilamme brändin suhteen ja onko se yhtä totuuden kanssa.
+Tai no, kahvi on kanssa aika hyvä supervoima. ☕
 
-Sen jälkeen pilkkoa toiminta osiin, jotta näemme missä kaikissa kohdissa me yrityksenä luomme näitä mielikuvia.
-- Asiakaskokemus
-- Tuote / palvelu
-- Myynti
-- Mainonta
-- Kulttuuri / ilmapiiri
+Mutta vakavasti — ne jotka takertuu yhteen osaamiseen vuosikymmeniksi, herää jossain vaiheessa maailmaan joka meni ohi jo aikoja sitten.
 
-Joskus kannattaa harkita ulkopuolista brändikumppania/ brändijohtajaa katsomaan linjat kuntoon ja suojelemaan jo syntynyttä.
+Samaa mieltä vai eri mieltä? Haastakaa mut. 👇
 
-hashtag#bränditerapeutti hashtag#mielikuva hashtag#brändäys
+#Urakehitys #Kasvu #TulevaisuudenTyö
 
 ---
 
-Pohjoismaissa elävänä on helppo ajatella, että maailma on jo pitkälti digitalisoitunut. Me tunnistaudumme verkossa sekunneissa. Allekirjoitamme sopimukset sähköisesti. Hoidamme pankkiasiat, terveyspalvelut ja viranomaisasiat puhelimella.
+Tänään opin jotain mikä muutti täysin mun ajattelun etätyöstä.
 
-Arki on niin sujuvaa, että syntyy huomaamatta harha: tämähän on jo valmis maailma. Sitten matkustaa. Tai tekee töitä kansainvälisesti. Tai näkee toisen maan hallinnon, pankkijärjestelmän tai yritysprosessit sisältäpäin.
+Spoileri: kyse ei ole siitä MISSÄ teet töitä.
 
-Ja havahtuu.
+Vaan MITEN teet töitä.
 
-Paperi elää vahvana. Fyysinen leima on edelleen valtaa. Prosessit ovat digitaalisia vain pinnalta. Data ei liiku. Ihmiset liikkuvat luukulta toiselle.
+Paras tiimi jonka kanssa oon ikinä työskennellyt oli hajautettu 4 maahan. Ja tiedättekö mikä toimi? Ei mikään fancy työkalu tai prosessi.
 
-Silloin ymmärtää: olemme vasta alussa.
+Luottamus. Ihan perus luottamus.
 
-Vaikka AI kehittyy vauhdilla ja puhutaan “AI-tsunamista”, mikään teknologia ei yksin:
+Kun ei tarvi mikromanageerata, ihmiset tekee parasta työtään. Yllätys yllätys. 😄
 
-1. yhdistä siiloja
-2. rakenna luottamusta
-3. korjaa kulttuuria
-4. uudista ajattelua
+Onko teillä hyviä (tai kauhutarinoita) etätiimeistä? Kertokaas. 👇
 
-Todellinen murros ei synny siitä, että siirrämme lomakkeet verkkoon. Se syntyy siitä, että suunnittelemme toimintamallit uudelleen. Digitalisaatio ei ole projekti. Se on rakenteellinen muutos tavassa, jolla yhteiskunta toimii.
-
-Ja se työ on vasta alussa. Me emme elä digitaalisessa päätepisteessä. Me elämme murroksen alkuvaiheessa. Ja juuri siksi tämä on yksi historian kiinnostavimmista ajanjaksoista rakentaa, johtaa ja uudistaa
+#Etätyö #Johtaminen #Tiimityö
