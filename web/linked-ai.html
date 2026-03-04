@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="fi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedAI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                }
+            }
+        }
+    </script>
+    <style>
+        .post-card {
+            transition: all 0.2s ease;
+        }
+
+        .post-card:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .progress-dot {
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.4;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-950 text-gray-100 min-h-screen">
+
+    <!-- Header -->
+    <header class="bg-gray-900 border-b border-gray-800 sticky top-0 z-10">
+        <div class="max-w-5xl mx-auto px-4 py-4">
+            <h1 class="text-xl font-bold text-blue-400">LinkedIn Post Generator</h1>
+            <p class="text-sm text-gray-400">AI-powered posts in your tone of voice</p>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 py-8 space-y-6">
+
+        <!-- API Key + Model -->
+        <section class="bg-gray-900 rounded-xl border border-gray-800 p-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- API Key -->
+                <div>
+                    <label for="apiKey" class="block text-sm font-semibold text-gray-200 mb-1">Gemini API Key</label>
+                    <p class="text-xs text-gray-500 mb-3">Your key is sent securely via POST and is never stored. Get
+                        one at <a href="https://aistudio.google.com/apikey" target="_blank"
+                            class="text-blue-400 underline hover:text-blue-300">Google AI Studio</a>.</p>
+                    <input type="password" id="apiKey" placeholder="AIzaSy..."
+                        class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5 text-sm text-gray-100 placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition">
+                </div>
+                <!-- Model -->
+                <div>
+                    <label for="modelSelect" class="block text-sm font-semibold text-gray-200 mb-1">Model</label>
+                    <p class="text-xs text-gray-500 mb-3">Choose a Gemini model, or click "Fetch my models" to see all
+                        models available on your API key.</p>
+                    <div class="flex gap-2">
+                        <select id="modelSelect"
+                            class="flex-1 min-w-0 bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5 text-sm text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition truncate">
+                            <option value="gemini-flash-latest" selected>gemini-flash-latest</option>
+                        </select>
+                        <button id="fetchModelsBtn" onclick="fetchModels()"
+                            class="text-xs bg-gray-800 hover:bg-gray-700 text-gray-300 border border-gray-700 px-3 py-2 rounded-lg transition whitespace-nowrap">Fetch
+                            my models</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Two-column: Sources + Sample -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Sources -->
+            <section class="bg-gray-900 rounded-xl border border-gray-800 p-6">
+                <div class="flex items-center justify-between mb-1">
+                    <label for="sources" class="text-sm font-semibold text-gray-200">Sources</label>
+                    <span id="urlCount" class="text-xs text-gray-500">0 / 20 URLs</span>
+                </div>
+                <p class="text-xs text-gray-500 mb-3">One URL per line. Supports articles and RSS feeds. Lines starting
+                    with # are ignored.</p>
+                <textarea id="sources" rows="12" placeholder="Loading defaults..."
+                    class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-sm font-mono text-gray-100 placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition resize-y"></textarea>
+            </section>
+
+            <!-- Sample -->
+            <section class="bg-gray-900 rounded-xl border border-gray-800 p-6">
+                <label for="sample" class="block text-sm font-semibold text-gray-200 mb-1">Sample Posts (Tone of
+                    Voice)</label>
+                <p class="text-xs text-gray-500 mb-3">Paste 2-3 of your own LinkedIn posts. The AI matches your writing
+                    style, humor, and formatting.</p>
+                <textarea id="sample" rows="12" placeholder="Loading defaults..."
+                    class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-sm text-gray-100 placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition resize-y"></textarea>
+            </section>
+        </div>
+
+        <!-- Generate button -->
+        <div class="flex justify-center">
+            <button id="generateBtn" onclick="startGeneration()"
+                class="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-8 py-3 rounded-xl shadow-lg shadow-blue-600/20 hover:shadow-blue-500/30 transition-all text-sm disabled:opacity-50 disabled:cursor-not-allowed">
+                Generate 5 LinkedIn Posts
+            </button>
+        </div>
+
+        <!-- Progress -->
+        <section id="progressSection" class="hidden fade-in">
+            <div class="bg-gray-900 rounded-xl border border-gray-800 p-6">
+                <h2 class="text-sm font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                    <span class="progress-dot inline-block w-2 h-2 bg-blue-500 rounded-full"></span>
+                    Progress
+                </h2>
+                <div id="progressLog" class="space-y-1 text-sm text-gray-400 font-mono">
+                </div>
+            </div>
+        </section>
+
+        <!-- Error -->
+        <section id="errorSection" class="hidden fade-in">
+            <div class="bg-red-950/50 border border-red-800 rounded-xl p-6">
+                <h2 class="text-sm font-semibold text-red-400 mb-2">Error</h2>
+                <p id="errorMessage" class="text-sm text-red-300"></p>
+            </div>
+        </section>
+
+        <!-- Results -->
+        <section id="resultsSection" class="hidden fade-in space-y-4">
+            <div class="flex items-center justify-between">
+                <h2 class="text-lg font-bold text-gray-100">Generated Posts</h2>
+                <button onclick="copyAll()"
+                    class="text-sm bg-gray-800 hover:bg-gray-700 text-gray-300 border border-gray-700 px-4 py-2 rounded-lg transition">
+                    Copy All
+                </button>
+            </div>
+            <div id="postsContainer" class="space-y-4"></div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="max-w-5xl mx-auto px-4 py-8 text-center text-xs text-gray-600">
+        Powered by Google Gemini. Your API key is sent securely via POST and never stored. All processing happens
+        per-request.
+    </footer>
+
+    <script>
+        // =====================================================================
+        // API base URL — change this if the Flask backend is on a different path
+        // e.g. '/li-api' if proxied under a prefix, or '' for same-origin root
+        // =====================================================================
+        const API_BASE = '';
+
+        // Restore API key from sessionStorage
+        const apiKeyInput = document.getElementById('apiKey');
+        const stored = sessionStorage.getItem('gemini_api_key');
+        if (stored) apiKeyInput.value = stored;
+        apiKeyInput.addEventListener('input', () => {
+            sessionStorage.setItem('gemini_api_key', apiKeyInput.value);
+        });
+
+        // Load defaults from the API on page load
+        async function loadDefaults() {
+            try {
+                const resp = await fetch(`${API_BASE}/defaults`);
+                if (!resp.ok) return;
+                const data = await resp.json();
+
+                // Populate textareas
+                document.getElementById('sources').value = data.sources || '';
+                document.getElementById('sample').value = data.sample || '';
+                countUrls();
+
+                // Populate model dropdown
+                const select = document.getElementById('modelSelect');
+                const models = data.popular_models || [];
+                const defaultModel = data.default_model || 'gemini-flash-latest';
+
+                if (models.length > 0) {
+                    select.innerHTML = '';
+                    models.forEach(m => {
+                        const opt = document.createElement('option');
+                        opt.value = m;
+                        opt.textContent = m;
+                        if (m === defaultModel) opt.selected = true;
+                        select.appendChild(opt);
+                    });
+                }
+            } catch (e) {
+                console.warn('Could not load defaults:', e);
+            }
+        }
+        loadDefaults();
+
+        // Fetch models from API (POST — key in body, not URL)
+        async function fetchModels() {
+            const apiKey = apiKeyInput.value.trim();
+            if (!apiKey) {
+                showError('Enter your API key first to fetch available models.');
+                return;
+            }
+
+            const btn = document.getElementById('fetchModelsBtn');
+            const select = document.getElementById('modelSelect');
+            const currentVal = select.value;
+            btn.disabled = true;
+            btn.textContent = 'Loading...';
+
+            try {
+                const resp = await fetch(`${API_BASE}/models`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ api_key: apiKey }),
+                });
+                const data = await resp.json();
+
+                if (data.error) {
+                    showError(data.error);
+                    return;
+                }
+
+                // Rebuild dropdown with fetched models
+                select.innerHTML = '';
+                const models = data.models || [];
+                let hasCurrentVal = false;
+
+                models.forEach(m => {
+                    const opt = document.createElement('option');
+                    opt.value = m.id;
+                    opt.textContent = m.id;
+                    if (m.id === currentVal) {
+                        opt.selected = true;
+                        hasCurrentVal = true;
+                    }
+                    select.appendChild(opt);
+                });
+
+                if (!hasCurrentVal && models.length > 0) {
+                    select.value = models[0].id;
+                }
+
+                btn.textContent = `${models.length} models loaded`;
+                setTimeout(() => { btn.textContent = 'Fetch my models'; }, 3000);
+            } catch (e) {
+                showError('Failed to fetch models. Check your API key.');
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        // URL counter
+        const sourcesTextarea = document.getElementById('sources');
+        const urlCountSpan = document.getElementById('urlCount');
+
+        function countUrls() {
+            const lines = sourcesTextarea.value.split('\n');
+            const count = lines.filter(l => {
+                const t = l.trim();
+                return t && !t.startsWith('#');
+            }).length;
+            urlCountSpan.textContent = `${count} / 20 URLs`;
+            urlCountSpan.className = count > 20
+                ? 'text-xs text-red-400 font-medium'
+                : 'text-xs text-gray-500';
+        }
+        sourcesTextarea.addEventListener('input', countUrls);
+        countUrls();
+
+        // Generation: POST /session -> get token -> SSE /generate/<token>
+        let eventSource = null;
+
+        async function startGeneration() {
+            const apiKey = apiKeyInput.value.trim();
+            const sources = sourcesTextarea.value;
+            const sample = document.getElementById('sample').value;
+            const model = document.getElementById('modelSelect').value;
+
+            if (!apiKey) {
+                showError('Please enter your Gemini API key.');
+                return;
+            }
+
+            const urlCount = sources.split('\n').filter(l => {
+                const t = l.trim();
+                return t && !t.startsWith('#');
+            }).length;
+            if (urlCount === 0) {
+                showError('Please add at least one source URL.');
+                return;
+            }
+            if (urlCount > 20) {
+                showError('Too many URLs (max 20).');
+                return;
+            }
+
+            // Reset UI
+            const btn = document.getElementById('generateBtn');
+            btn.disabled = true;
+            btn.textContent = 'Generating...';
+
+            document.getElementById('progressSection').classList.remove('hidden');
+            document.getElementById('errorSection').classList.add('hidden');
+            document.getElementById('resultsSection').classList.add('hidden');
+            document.getElementById('progressLog').innerHTML = '';
+            document.getElementById('postsContainer').innerHTML = '';
+
+            // Step 1: Create session via POST (API key in body, not URL)
+            try {
+                const sessionResp = await fetch(`${API_BASE}/session`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        api_key: apiKey,
+                        sources: sources,
+                        sample: sample,
+                        model: model,
+                    }),
+                });
+                const sessionData = await sessionResp.json();
+
+                if (sessionData.error) {
+                    showError(sessionData.error);
+                    cleanup();
+                    return;
+                }
+
+                // Step 2: Connect to SSE with token only (no secrets in URL)
+                const token = sessionData.token;
+                addProgress('Session created. Starting generation...');
+
+                if (eventSource) {
+                    eventSource.close();
+                }
+
+                eventSource = new EventSource(`${API_BASE}/generate/${encodeURIComponent(token)}`);
+
+                eventSource.addEventListener('progress', (e) => {
+                    const msg = JSON.parse(e.data);
+                    addProgress(msg);
+                });
+
+                eventSource.addEventListener('error', (e) => {
+                    if (e.data) {
+                        const msg = JSON.parse(e.data);
+                        showError(msg);
+                    } else if (eventSource.readyState !== EventSource.CLOSED) {
+                        showError('Connection lost. Please try again.');
+                    }
+                    cleanup();
+                });
+
+                eventSource.addEventListener('result', (e) => {
+                    const posts = JSON.parse(e.data);
+                    displayPosts(posts);
+                });
+
+                eventSource.addEventListener('done', () => {
+                    cleanup();
+                });
+
+                eventSource.onerror = () => {
+                    if (eventSource && eventSource.readyState === EventSource.CLOSED) {
+                        cleanup();
+                    }
+                };
+
+            } catch (e) {
+                showError('Failed to start generation. Please try again.');
+                cleanup();
+            }
+        }
+
+        function cleanup() {
+            if (eventSource) {
+                eventSource.close();
+                eventSource = null;
+            }
+            const btn = document.getElementById('generateBtn');
+            btn.disabled = false;
+            btn.textContent = 'Generate 5 LinkedIn Posts';
+        }
+
+        function addProgress(message) {
+            const log = document.getElementById('progressLog');
+            const line = document.createElement('div');
+            line.className = 'fade-in flex items-center gap-2';
+            line.innerHTML = `<span class="text-blue-400">&#9654;</span> ${escapeHtml(message)}`;
+            log.appendChild(line);
+            log.scrollTop = log.scrollHeight;
+        }
+
+        function showError(message) {
+            document.getElementById('errorSection').classList.remove('hidden');
+            document.getElementById('errorMessage').textContent = message;
+        }
+
+        function displayPosts(raw) {
+            const container = document.getElementById('postsContainer');
+            const section = document.getElementById('resultsSection');
+            section.classList.remove('hidden');
+
+            const posts = raw.split(/\n---\n/).map(p => p.trim()).filter(p => p.length > 0);
+
+            posts.forEach((post, i) => {
+                const card = document.createElement('div');
+                card.className = 'post-card bg-gray-900 rounded-xl border border-gray-800 p-6 fade-in';
+                card.innerHTML = `
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-semibold text-blue-400 bg-blue-950 px-2 py-1 rounded-full">Post ${i + 1}</span>
+                        <button
+                            onclick="copyPost(this, ${i})"
+                            class="text-xs bg-gray-800 hover:bg-gray-700 text-gray-300 border border-gray-700 px-3 py-1.5 rounded-lg transition"
+                        >Copy</button>
+                    </div>
+                    <div class="whitespace-pre-wrap text-sm text-gray-200 leading-relaxed post-text">${escapeHtml(post)}</div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function copyPost(btn, index) {
+            const cards = document.querySelectorAll('.post-text');
+            if (cards[index]) {
+                navigator.clipboard.writeText(cards[index].textContent).then(() => {
+                    btn.textContent = 'Copied!';
+                    btn.classList.add('bg-green-900', 'text-green-300', 'border-green-700');
+                    setTimeout(() => {
+                        btn.textContent = 'Copy';
+                        btn.classList.remove('bg-green-900', 'text-green-300', 'border-green-700');
+                    }, 2000);
+                });
+            }
+        }
+
+        function copyAll() {
+            const cards = document.querySelectorAll('.post-text');
+            const all = Array.from(cards).map(c => c.textContent).join('\n\n---\n\n');
+            navigator.clipboard.writeText(all).then(() => {
+                const btn = event.target;
+                btn.textContent = 'Copied all!';
+                setTimeout(() => { btn.textContent = 'Copy All'; }, 2000);
+            });
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+
+</html>
