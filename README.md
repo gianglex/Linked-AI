@@ -4,6 +4,8 @@ An AI-powered tool that reads content sources, identifies trending topics, and g
 
 This project was primarily built using Large Language Models (LLMs).
 
+Currently running live demo at https://giangle.fi/linked-ai.html (Note:I do not collect any data, but you should generally never share API keyss or optionally create a new key for testing and then delete the key right after testing)
+
 ## How It Works
 
 ```
